@@ -1,21 +1,54 @@
 package main
 
-import b64 "encoding/base64"
-import "fmt"
-import "os"
+import (
+	"encoding/base64"
+	"os"
+        "log"
+	"fmt"
+	"github.com/urfave/cli"
+)
+
+const version = "0.1.0"
 
 func main() {
 
-    file, _ := os.Open("image.jpg")
-	defer file.Close()
+	var file string
 
-	fi, _ := file.Stat()
-	size := fi.Size()
+	app := cli.NewApp()
+	app.Name = "base64url-encode"
+	app.Version = version
+	app.Usage = "base64url-encode"
 
-	data := make([]byte, size)
-	file.Read(data)
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:        "file, f",
+			Usage:       "file path",
+			Destination: &file,
+		},
+	}
 
-    uEnc := b64.URLEncoding.EncodeToString(data)
-    fmt.Println(uEnc)
+	app.Action = func(c *cli.Context) error {
+		if file == "" {
+			return fmt.Errorf("please set file path")
+		}
+
+		file, _ := os.Open(file)
+		defer file.Close()
+	
+		fi, _ := file.Stat()
+		size := fi.Size()
+	
+		data := make([]byte, size)
+		file.Read(data)
+	
+		uEnc := base64.URLEncoding.EncodeToString(data)
+		fmt.Println(uEnc)
+
+		return nil
+	}
+
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
-

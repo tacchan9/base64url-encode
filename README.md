@@ -15,14 +15,9 @@ $ go get github.com/tacchan9/base64url-encode
 ```
 
 ##  CLIとしてのInstallation
-pathを通して installコマンドを利用すると、cliとして利用できます。
+pathを通して利用すると、cliとして利用できます。
 ```bash
 export PATH=$PATH:$GOPATH/bin
-```
-
-* install
-```bash
-$ go install
 ```
 
 # Examples

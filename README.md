@@ -34,7 +34,7 @@ $ base64url-encode -f test.jpg
 ## Global Options
 ```
 --file value, -f value
-       を指定してください。
+       ファイルを指定してください。
 ```
 
 ```
